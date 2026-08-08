@@ -2,7 +2,7 @@
 const teams = [
     { id: 1, name: "Obsidian FC", logo: "team_logo/Obsidian FC.jpg" },
     { id: 2, name: "Desky FC", logo: "team_logo/Desky FC.jpg" },
-    { id: 3, name: "Man Utd", logo: "team_logo/Manchester UTD.jpg" },
+    { id: 3, name: "Man Utd", logo: "team_logo/Man UTD.jpg" },
     { id: 4, name: "Galaxiers", logo: "team_logo/Galaxiers.jpg" },
     { id: 5, name: "Hyper City", logo: "team_logo/Hyper City.jpg" },
     { id: 6, name: "Viper Fc", logo: "team_logo/Viper FC.jpg" },
