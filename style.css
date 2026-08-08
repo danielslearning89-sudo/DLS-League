@@ -1,0 +1,120 @@
+/* General Styling & Dark Theme */
+:root {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --accent-color: #00e676;
+    --text-color: #ffffff;
+    --text-muted: #a0a0a0;
+    --border-color: #333333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    text-align: center;
+    padding: 50px 20px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.hero h1 { margin: 0 0 10px 0; font-size: 2.5rem; }
+.hero p { color: #e0e0e0; margin-bottom: 25px; }
+
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #25D366;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.cta-btn:hover {
+    transform: scale(1.05);
+    background-color: #1eb954;
+}
+
+.wa-icon { width: 20px; height: 20px; }
+
+/* Table Styling */
+.section { margin-top: 40px; }
+.section h2 { border-bottom: 2px solid var(--accent-color); padding-bottom: 8px; display: inline-block; }
+
+.table-wrapper { overflow-x: auto; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td { padding: 12px 15px; text-align: center; }
+th { background-color: #2a2a2a; color: var(--text-muted); font-size: 0.9rem; }
+tr:nth-child(even) { background-color: #181818; }
+tr:hover { background-color: #252525; }
+
+.team-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+}
+
+.team-logo {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+/* Fixtures Styling */
+.fixtures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.match-card {
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.match-team {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 40%;
+}
+
+.match-team.away { justify-content: flex-end; }
+
+.score-box {
+    font-weight: bold;
+    background-color: #333;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: var(--accent-color);
+}

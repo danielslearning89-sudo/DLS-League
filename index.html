@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Sports League</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="hero">
+        <div class="container">
+            <h1>DLS League</h1>
+            <p>Register your team, check fixtures, and track live standings!</p>
+            <a href="https://chat.whatsapp.com/BmmbnRqv9vY8Gu9NescqUC?s=cl&p=a&mlu=0" target="_blank" class="cta-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="wa-icon">
+                Join WhatsApp to Register Team
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h2>League Table</h2>
+            <div class="table-wrapper">
+                <table id="league-table">
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Team</th>
+                            <th>P</th>
+                            <th>W</th>
+                            <th>D</th>
+                            <th>L</th>
+                            <th>GD</th>
+                            <th>Pts</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Fixtures & Results</h2>
+            <div id="fixtures-container" class="fixtures-grid">
+                </div>
+        </section>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
