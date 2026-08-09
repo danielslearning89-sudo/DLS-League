@@ -14,7 +14,7 @@ const matches = [
     // --- FIRST HALF OF SEASON ---
     // Matchday 1 (Titan Warriors bye)
     { homeId: 1, awayId: 6, homeScore: 1, awayScore: 0, played: true },
-    { homeId: 2, awayId: 5, homeScore: 0, awayScore: 0, played: false },
+    { homeId: 2, awayId: 5, homeScore: 0, awayScore: 0, played: true },
     { homeId: 3, awayId: 4, homeScore: 0, awayScore: 0, played: false },
 
     // Matchday 2 (Viper Squad bye)
