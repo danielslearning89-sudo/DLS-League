@@ -94,3 +94,24 @@ function renderFixtures() {
         `;
     }).join('');
 }
+
+function filterFixtures() {
+    // Get what the user typed and make it lowercase
+    const query = document.getElementById("team-search").value.toLowerCase().trim();
+    const matchCards = document.querySelectorAll("#fixtures-container .match-card");
+
+    matchCards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        
+        if (query === "") {
+            // Show all match cards if the search box is empty
+            card.style.display = "flex";
+        } else if (text.includes(query)) {
+            // Keep matching cards visible
+            card.style.display = "flex";
+        } else {
+            // Completely hide non-matching cards
+            card.style.display = "none";
+        }
+    });
+}
