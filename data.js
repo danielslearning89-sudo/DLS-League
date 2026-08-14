@@ -18,7 +18,7 @@ const matches = [
     { homeId: 3, awayId: 4, homeScore: 0, awayScore: 3, played: true },
 
     // Matchday 2 (Viper Squad bye)
-    { homeId: 7, awayId: 5, homeScore: 0, awayScore: 0, played: false },
+    { homeId: 7, awayId: 5, homeScore: 0, awayScore: 3, played: true },
     { homeId: 1, awayId: 4, homeScore: 0, awayScore: 0, played: false },
     { homeId: 2, awayId: 3, homeScore: 0, awayScore: 0, played: false },
 
