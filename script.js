@@ -85,17 +85,31 @@ function renderTable() {
 // Render Fixtures List
 function renderFixtures() {
     const container = document.getElementById("fixtures-container");
-    
-    container.innerHTML = matches.map(match => {
-        const home = teams.find(t => t.id === match.homeId);
-        const away = teams.find(t => t.id === match.awayId);
+    container.innerHTML = "";
 
-        const scoreDisplay = match.played 
-            ? `${match.homeScore} - ${match.awayScore}` 
-            : `VS`;
+    // Get all unique matchday numbers and sort them
+    const matchdays = [...new Set(matches.map(m => m.matchday))].sort((a, b) => a - b);
 
-        return `
-            <div class="match-card">
+    matchdays.forEach(day => {
+        // Create a header for the matchday
+        const header = document.createElement("h3");
+        header.className = "matchday-title";
+        header.textContent = `Matchday ${day}`;
+        container.appendChild(header);
+
+        // Get all matches for this specific matchday
+        const dayMatches = matches.filter(m => m.matchday === day);
+
+        dayMatches.forEach(match => {
+            const home = teams.find(t => t.id === match.homeId);
+            const away = teams.find(t => t.id === match.awayId);
+            const scoreDisplay = match.played 
+                ? `${match.homeScore} - ${match.awayScore}` 
+                : `VS`;
+
+            const matchCard = document.createElement("div");
+            matchCard.className = "match-card";
+            matchCard.innerHTML = `
                 <div class="match-team">
                     <img src="${home.logo}" class="team-logo" alt="">
                     <span>${home.name}</span>
@@ -105,9 +119,10 @@ function renderFixtures() {
                     <span>${away.name}</span>
                     <img src="${away.logo}" class="team-logo" alt="">
                 </div>
-            </div>
-        `;
-    }).join('');
+            `;
+            container.appendChild(matchCard);
+        });
+    });
 }
 
 // Search Filter Function
