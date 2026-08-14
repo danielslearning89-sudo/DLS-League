@@ -12,74 +12,48 @@ const teams = [
 // All 42 Double Round-Robin fixtures (7 Teams, 14 Matchdays)
 const matches = [
     // --- FIRST HALF OF SEASON ---
-    // Matchday 1 (Titan Warriors bye)
-    { homeId: 1, awayId: 6, homeScore: 1, awayScore: 0, played: true },
-    { homeId: 2, awayId: 5, homeScore: 0, awayScore: 0, played: true },
-    { homeId: 3, awayId: 4, homeScore: 0, awayScore: 3, played: true },
-
-    // Matchday 2 (Viper Squad bye)
-    { homeId: 7, awayId: 5, homeScore: 0, awayScore: 3, played: true },
-    { homeId: 1, awayId: 4, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 2, awayId: 3, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 3 (Apex Predators bye)
-    { homeId: 6, awayId: 4, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 7, awayId: 3, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 1, awayId: 2, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 4 (Shadow Strikers bye)
-    { homeId: 5, awayId: 3, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 6, awayId: 2, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 7, awayId: 1, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 5 (Golden Eagles bye)
-    { homeId: 4, awayId: 2, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 5, awayId: 1, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 6, awayId: 7, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 6 (Cyber Knights bye)
-    { homeId: 3, awayId: 1, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 4, awayId: 7, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 5, awayId: 6, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 7 (Thunder FC bye)
-    { homeId: 2, awayId: 7, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 3, awayId: 6, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 4, awayId: 5, homeScore: 0, awayScore: 0, played: false },
+    { homeId: 1, awayId: 6, homeScore: 0, awayScore: 0, played: false, matchday: 1 },
+    { homeId: 2, awayId: 5, homeScore: 0, awayScore: 0, played: false, matchday: 2 },
+    { homeId: 3, awayId: 4, homeScore: 0, awayScore: 0, played: false, matchday: 3 },
+    { homeId: 7, awayId: 5, homeScore: 0, awayScore: 0, played: false, matchday: 4 },
+    { homeId: 1, awayId: 4, homeScore: 0, awayScore: 0, played: false, matchday: 5 },
+    { homeId: 2, awayId: 3, homeScore: 0, awayScore: 0, played: false, matchday: 6 },
+    { homeId: 6, awayId: 4, homeScore: 0, awayScore: 0, played: false, matchday: 7 },
+    { homeId: 7, awayId: 3, homeScore: 0, awayScore: 0, played: false, matchday: 8 },
+    { homeId: 1, awayId: 2, homeScore: 0, awayScore: 0, played: false, matchday: 9 },
+    { homeId: 5, awayId: 3, homeScore: 0, awayScore: 0, played: false, matchday: 10 },
+    { homeId: 6, awayId: 2, homeScore: 0, awayScore: 0, played: false, matchday: 11 },
+    { homeId: 7, awayId: 1, homeScore: 0, awayScore: 0, played: false, matchday: 12 },
+    { homeId: 4, awayId: 2, homeScore: 0, awayScore: 0, played: false, matchday: 13 },
+    { homeId: 5, awayId: 1, homeScore: 0, awayScore: 0, played: false, matchday: 14 },
+    { homeId: 6, awayId: 7, homeScore: 0, awayScore: 0, played: false, matchday: 15 },
+    { homeId: 3, awayId: 1, homeScore: 0, awayScore: 0, played: false, matchday: 16 },
+    { homeId: 4, awayId: 7, homeScore: 0, awayScore: 0, played: false, matchday: 17 },
+    { homeId: 5, awayId: 6, homeScore: 0, awayScore: 0, played: false, matchday: 18 },
+    { homeId: 2, awayId: 7, homeScore: 0, awayScore: 0, played: false, matchday: 19 },
+    { homeId: 3, awayId: 6, homeScore: 0, awayScore: 0, played: false, matchday: 20 },
+    { homeId: 4, awayId: 5, homeScore: 0, awayScore: 0, played: false, matchday: 21 },
 
     // --- SECOND HALF OF SEASON (Reverse Fixtures) ---
-    // Matchday 8 (Titan Warriors bye)
-    { homeId: 6, awayId: 1, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 5, awayId: 2, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 4, awayId: 3, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 9 (Viper Squad bye)
-    { homeId: 5, awayId: 7, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 4, awayId: 1, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 3, awayId: 2, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 10 (Apex Predators bye)
-    { homeId: 4, awayId: 6, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 3, awayId: 7, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 2, awayId: 1, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 11 (Shadow Strikers bye)
-    { homeId: 3, awayId: 5, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 2, awayId: 6, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 1, awayId: 7, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 12 (Golden Eagles bye)
-    { homeId: 2, awayId: 4, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 1, awayId: 5, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 7, awayId: 6, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 13 (Cyber Knights bye)
-    { homeId: 1, awayId: 3, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 7, awayId: 4, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 6, awayId: 5, homeScore: 0, awayScore: 0, played: false },
-
-    // Matchday 14 (Thunder FC bye)
-    { homeId: 7, awayId: 2, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 6, awayId: 3, homeScore: 0, awayScore: 0, played: false },
-    { homeId: 5, awayId: 4, homeScore: 0, awayScore: 0, played: false }
+    { homeId: 6, awayId: 1, homeScore: 0, awayScore: 0, played: false, matchday: 22 },
+    { homeId: 5, awayId: 2, homeScore: 0, awayScore: 0, played: false, matchday: 23 },
+    { homeId: 4, awayId: 3, homeScore: 0, awayScore: 0, played: false, matchday: 24 },
+    { homeId: 5, awayId: 7, homeScore: 0, awayScore: 0, played: false, matchday: 25 },
+    { homeId: 4, awayId: 1, homeScore: 0, awayScore: 0, played: false, matchday: 26 },
+    { homeId: 3, awayId: 2, homeScore: 0, awayScore: 0, played: false, matchday: 27 },
+    { homeId: 4, awayId: 6, homeScore: 0, awayScore: 0, played: false, matchday: 28 },
+    { homeId: 3, awayId: 7, homeScore: 0, awayScore: 0, played: false, matchday: 29 },
+    { homeId: 2, awayId: 1, homeScore: 0, awayScore: 0, played: false, matchday: 30 },
+    { homeId: 3, awayId: 5, homeScore: 0, awayScore: 0, played: false, matchday: 31 },
+    { homeId: 2, awayId: 6, homeScore: 0, awayScore: 0, played: false, matchday: 32 },
+    { homeId: 1, awayId: 7, homeScore: 0, awayScore: 0, played: false, matchday: 33 },
+    { homeId: 2, awayId: 4, homeScore: 0, awayScore: 0, played: false, matchday: 34 },
+    { homeId: 1, awayId: 5, homeScore: 0, awayScore: 0, played: false, matchday: 35 },
+    { homeId: 7, awayId: 6, homeScore: 0, awayScore: 0, played: false, matchday: 36 },
+    { homeId: 1, awayId: 3, homeScore: 0, awayScore: 0, played: false, matchday: 37 },
+    { homeId: 7, awayId: 4, homeScore: 0, awayScore: 0, played: false, matchday: 38 },
+    { homeId: 6, awayId: 5, homeScore: 0, awayScore: 0, played: false, matchday: 39 },
+    { homeId: 7, awayId: 2, homeScore: 0, awayScore: 0, played: false, matchday: 40 },
+    { homeId: 6, awayId: 3, homeScore: 0, awayScore: 0, played: false, matchday: 41 },
+    { homeId: 5, awayId: 4, homeScore: 0, awayScore: 0, played: false, matchday: 42 }
 ];
