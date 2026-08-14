@@ -12,10 +12,10 @@ const teams = [
 // All 42 Double Round-Robin fixtures (7 Teams, 14 Matchdays)
 const matches = [
     // --- FIRST HALF OF SEASON ---
-    { homeId: 1, awayId: 6, homeScore: 0, awayScore: 0, played: false, matchday: 1 },
-    { homeId: 2, awayId: 5, homeScore: 0, awayScore: 0, played: false, matchday: 2 },
-    { homeId: 3, awayId: 4, homeScore: 0, awayScore: 0, played: false, matchday: 3 },
-    { homeId: 7, awayId: 5, homeScore: 0, awayScore: 0, played: false, matchday: 4 },
+    { homeId: 1, awayId: 6, homeScore: 1, awayScore: 0, played: true, matchday: 1 },
+    { homeId: 2, awayId: 5, homeScore: 0, awayScore: 0, played: true, matchday: 2 },
+    { homeId: 3, awayId: 4, homeScore: 0, awayScore: 3, played: true, matchday: 3 },
+    { homeId: 7, awayId: 5, homeScore: 0, awayScore: 3, played: true, matchday: 4 },
     { homeId: 1, awayId: 4, homeScore: 0, awayScore: 0, played: false, matchday: 5 },
     { homeId: 2, awayId: 3, homeScore: 0, awayScore: 0, played: false, matchday: 6 },
     { homeId: 6, awayId: 4, homeScore: 0, awayScore: 0, played: false, matchday: 7 },
