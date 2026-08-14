@@ -82,7 +82,7 @@ function renderTable() {
     return standings;
 }
 
-// Render Fixtures List
+// Render Fixtures Grouped by Matchday
 function renderFixtures() {
     const container = document.getElementById("fixtures-container");
     container.innerHTML = "";
@@ -91,13 +91,22 @@ function renderFixtures() {
     const matchdays = [...new Set(matches.map(m => m.matchday))].sort((a, b) => a - b);
 
     matchdays.forEach(day => {
-        // Create a header for the matchday
+        // Create a wrapper group for each matchday
+        const dayGroup = document.createElement("div");
+        dayGroup.className = "matchday-group";
+        dayGroup.setAttribute("data-matchday", day);
+
+        // Matchday Heading
         const header = document.createElement("h3");
         header.className = "matchday-title";
         header.textContent = `Matchday ${day}`;
-        container.appendChild(header);
+        dayGroup.appendChild(header);
 
-        // Get all matches for this specific matchday
+        // Container for cards in this matchday
+        const cardsContainer = document.createElement("div");
+        cardsContainer.className = "matchday-cards";
+
+        // Filter matches for this day
         const dayMatches = matches.filter(m => m.matchday === day);
 
         dayMatches.forEach(match => {
@@ -120,22 +129,39 @@ function renderFixtures() {
                     <img src="${away.logo}" class="team-logo" alt="">
                 </div>
             `;
-            container.appendChild(matchCard);
+            cardsContainer.appendChild(matchCard);
         });
+
+        dayGroup.appendChild(cardsContainer);
+        container.appendChild(dayGroup);
     });
 }
 
-// Search Filter Function
+// Updated Search Filter Function
 function filterFixtures() {
     const query = document.getElementById("team-search").value.toLowerCase().trim();
-    const matchCards = document.querySelectorAll("#fixtures-container .match-card");
+    const matchdayGroups = document.querySelectorAll(".matchday-group");
 
-    matchCards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        if (query === "" || text.includes(query)) {
-            card.style.display = "flex";
+    matchdayGroups.forEach(group => {
+        const cards = group.querySelectorAll(".match-card");
+        let hasVisibleCards = false;
+
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            
+            if (query === "" || text.includes(query)) {
+                card.style.display = "flex";
+                hasVisibleCards = true; // Mark that this matchday has a matching match
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        // Hide the ENTIRE Matchday header & section if no matches match the search query
+        if (hasVisibleCards) {
+            group.style.display = "block";
         } else {
-            card.style.display = "none";
+            group.style.display = "none";
         }
     });
 }
