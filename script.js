@@ -1,17 +1,19 @@
-document.addEventListener("DOMContentLoaded", () => {
-    renderTable();
-    renderFixtures();
-});
-
-function renderTable() {
+// Calculate Points, GD, and Sort Standings
+function calculateStandings() {
     // Initialize stats for each team
-    let standings = teams.map(team => ({
+    const standings = teams.map(team => ({
         ...team,
-        played: 0, won: 0, drawn: 0, lost: 0,
-        gf: 0, ga: 0, gd: 0, points: 0
+        played: 0,
+        won: 0,
+        drawn: 0,
+        lost: 0,
+        gf: 0,
+        ga: 0,
+        gd: 0,
+        pts: 0
     }));
 
-    // Calculate match outcomes
+    // Process each played match
     matches.forEach(match => {
         if (!match.played) return;
 
@@ -21,6 +23,7 @@ function renderTable() {
         if (home && away) {
             home.played++;
             away.played++;
+
             home.gf += match.homeScore;
             home.ga += match.awayScore;
             away.gf += match.awayScore;
@@ -28,34 +31,43 @@ function renderTable() {
 
             if (match.homeScore > match.awayScore) {
                 home.won++;
-                home.points += 3;
+                home.pts += 3;
                 away.lost++;
             } else if (match.homeScore < match.awayScore) {
                 away.won++;
-                away.points += 3;
+                away.pts += 3;
                 home.lost++;
             } else {
                 home.drawn++;
+                home.pts += 1;
                 away.drawn++;
-                home.points += 1;
-                away.points += 1;
+                away.pts += 1;
             }
-
-            home.gd = home.gf - home.ga;
-            away.gd = away.gf - away.ga;
         }
     });
 
-    // Sort teams by points, then Goal Difference (GD)
-    standings.sort((a, b) => b.points - a.points || b.gd - a.gd);
+    // Calculate Goal Difference & Sort (Points -> Goal Difference -> Goals For)
+    standings.forEach(t => t.gd = t.gf - t.ga);
 
-    // Output rows to HTML
-    const tbody = document.getElementById("table-body");
-    tbody.innerHTML = standings.map((team, index) => `
+    standings.sort((a, b) => {
+        if (b.pts !== a.pts) return b.pts - a.pts;
+        if (b.gd !== a.gd) return b.gd - a.gd;
+        return b.gf - a.gf;
+    });
+
+    return standings;
+}
+
+// Render Standings Table
+function renderTable() {
+    const tableBody = document.getElementById("table-body");
+    const standings = calculateStandings();
+
+    tableBody.innerHTML = standings.map((team, index) => `
         <tr>
             <td>${index + 1}</td>
             <td class="team-cell">
-                <img src="${team.logo}" alt="${team.name}" class="team-logo">
+                <img src="${team.logo}" class="team-logo" alt="">
                 <span>${team.name}</span>
             </td>
             <td>${team.played}</td>
@@ -63,11 +75,14 @@ function renderTable() {
             <td>${team.drawn}</td>
             <td>${team.lost}</td>
             <td>${team.gd > 0 ? '+' + team.gd : team.gd}</td>
-            <td><strong>${team.points}</strong></td>
+            <td><strong>${team.pts}</strong></td>
         </tr>
     `).join('');
+
+    return standings;
 }
 
+// Render Fixtures List
 function renderFixtures() {
     const container = document.getElementById("fixtures-container");
     
@@ -95,23 +110,44 @@ function renderFixtures() {
     }).join('');
 }
 
+// Search Filter Function
 function filterFixtures() {
-    // Get what the user typed and make it lowercase
     const query = document.getElementById("team-search").value.toLowerCase().trim();
     const matchCards = document.querySelectorAll("#fixtures-container .match-card");
 
     matchCards.forEach(card => {
         const text = card.textContent.toLowerCase();
-        
-        if (query === "") {
-            // Show all match cards if the search box is empty
-            card.style.display = "flex";
-        } else if (text.includes(query)) {
-            // Keep matching cards visible
+        if (query === "" || text.includes(query)) {
             card.style.display = "flex";
         } else {
-            // Completely hide non-matching cards
             card.style.display = "none";
         }
     });
 }
+
+// Update Top Stats Overview Cards
+function updateStatsOverview(standings) {
+    let totalPlayed = 0;
+    let totalGoals = 0;
+
+    matches.forEach(match => {
+        if (match.played) {
+            totalPlayed++;
+            totalGoals += (match.homeScore + match.awayScore);
+        }
+    });
+
+    document.getElementById("stat-matches").textContent = totalPlayed;
+    document.getElementById("stat-goals").textContent = totalGoals;
+
+    if (standings && standings.length > 0) {
+        document.getElementById("stat-leader").textContent = standings[0].name;
+    }
+}
+
+// Initialize Page
+document.addEventListener("DOMContentLoaded", () => {
+    const sortedStandings = renderTable();
+    renderFixtures();
+    updateStatsOverview(sortedStandings);
+});
