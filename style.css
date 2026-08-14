@@ -1,194 +1,238 @@
-// Calculate Points, GD, and Sort Standings
-function calculateStandings() {
-    // Initialize stats for each team
-    const standings = teams.map(team => ({
-        ...team,
-        played: 0,
-        won: 0,
-        drawn: 0,
-        lost: 0,
-        gf: 0,
-        ga: 0,
-        gd: 0,
-        pts: 0
-    }));
-
-    // Process each played match
-    matches.forEach(match => {
-        if (!match.played) return;
-
-        const home = standings.find(t => t.id === match.homeId);
-        const away = standings.find(t => t.id === match.awayId);
-
-        if (home && away) {
-            home.played++;
-            away.played++;
-
-            home.gf += match.homeScore;
-            home.ga += match.awayScore;
-            away.gf += match.awayScore;
-            away.ga += match.homeScore;
-
-            if (match.homeScore > match.awayScore) {
-                home.won++;
-                home.pts += 3;
-                away.lost++;
-            } else if (match.homeScore < match.awayScore) {
-                away.won++;
-                away.pts += 3;
-                home.lost++;
-            } else {
-                home.drawn++;
-                home.pts += 1;
-                away.drawn++;
-                away.pts += 1;
-            }
-        }
-    });
-
-    // Calculate Goal Difference & Sort (Points -> Goal Difference -> Goals For)
-    standings.forEach(t => t.gd = t.gf - t.ga);
-
-    standings.sort((a, b) => {
-        if (b.pts !== a.pts) return b.pts - a.pts;
-        if (b.gd !== a.gd) return b.gd - a.gd;
-        return b.gf - a.gf;
-    });
-
-    return standings;
+/* CSS Variables & Theme Setup */
+:root {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #ffffff;
+    --accent-color: #00ff88;
+    --border-color: #333333;
+    --text-muted: #aaaaaa;
 }
 
-// Render Standings Table
-function renderTable() {
-    const tableBody = document.getElementById("table-body");
-    const standings = calculateStandings();
-
-    tableBody.innerHTML = standings.map((team, index) => `
-        <tr>
-            <td>${index + 1}</td>
-            <td class="team-cell">
-                <img src="${team.logo}" class="team-logo" alt="">
-                <span>${team.name}</span>
-            </td>
-            <td>${team.played}</td>
-            <td>${team.won}</td>
-            <td>${team.drawn}</td>
-            <td>${team.lost}</td>
-            <td>${team.gd > 0 ? '+' + team.gd : team.gd}</td>
-            <td><strong>${team.pts}</strong></td>
-        </tr>
-    `).join('');
-
-    return standings;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
 }
 
-// Render Fixtures Grouped by Matchday
-function renderFixtures() {
-    const container = document.getElementById("fixtures-container");
-    container.innerHTML = "";
-
-    // Get all unique matchday numbers and sort them
-    const matchdays = [...new Set(matches.map(m => m.matchday))].sort((a, b) => a - b);
-
-    matchdays.forEach(day => {
-        // Create a wrapper group for each matchday
-        const dayGroup = document.createElement("div");
-        dayGroup.className = "matchday-group";
-        dayGroup.setAttribute("data-matchday", day);
-
-        // Matchday Heading
-        const header = document.createElement("h3");
-        header.className = "matchday-title";
-        header.textContent = `Matchday ${day}`;
-        dayGroup.appendChild(header);
-
-        // Container for cards in this matchday
-        const cardsContainer = document.createElement("div");
-        cardsContainer.className = "matchday-cards";
-
-        // Filter matches for this day
-        const dayMatches = matches.filter(m => m.matchday === day);
-
-        dayMatches.forEach(match => {
-            const home = teams.find(t => t.id === match.homeId);
-            const away = teams.find(t => t.id === match.awayId);
-            const scoreDisplay = match.played 
-                ? `${match.homeScore} - ${match.awayScore}` 
-                : `VS`;
-
-            const matchCard = document.createElement("div");
-            matchCard.className = "match-card";
-            matchCard.innerHTML = `
-                <div class="match-team">
-                    <img src="${home.logo}" class="team-logo" alt="">
-                    <span>${home.name}</span>
-                </div>
-                <div class="score-box">${scoreDisplay}</div>
-                <div class="match-team away">
-                    <span>${away.name}</span>
-                    <img src="${away.logo}" class="team-logo" alt="">
-                </div>
-            `;
-            cardsContainer.appendChild(matchCard);
-        });
-
-        dayGroup.appendChild(cardsContainer);
-        container.appendChild(dayGroup);
-    });
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-// Updated Search Filter Function
-function filterFixtures() {
-    const query = document.getElementById("team-search").value.toLowerCase().trim();
-    const matchdayGroups = document.querySelectorAll(".matchday-group");
-
-    matchdayGroups.forEach(group => {
-        const cards = group.querySelectorAll(".match-card");
-        let hasVisibleCards = false;
-
-        cards.forEach(card => {
-            const text = card.textContent.toLowerCase();
-            
-            if (query === "" || text.includes(query)) {
-                card.style.display = "flex";
-                hasVisibleCards = true; // Mark that this matchday has a matching match
-            } else {
-                card.style.display = "none";
-            }
-        });
-
-        // Hide the ENTIRE Matchday header & section if no matches match the search query
-        if (hasVisibleCards) {
-            group.style.display = "block";
-        } else {
-            group.style.display = "none";
-        }
-    });
+/* Header / Hero */
+.hero {
+    background: linear-gradient(135deg, #1f2937, #111827);
+    text-align: center;
+    padding: 40px 20px;
+    border-bottom: 2px solid var(--accent-color);
 }
 
-// Update Top Stats Overview Cards
-function updateStatsOverview(standings) {
-    let totalPlayed = 0;
-    let totalGoals = 0;
-
-    matches.forEach(match => {
-        if (match.played) {
-            totalPlayed++;
-            totalGoals += (match.homeScore + match.awayScore);
-        }
-    });
-
-    document.getElementById("stat-matches").textContent = totalPlayed;
-    document.getElementById("stat-goals").textContent = totalGoals;
-
-    if (standings && standings.length > 0) {
-        document.getElementById("stat-leader").textContent = standings[0].name;
-    }
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
 }
 
-// Initialize Page
-document.addEventListener("DOMContentLoaded", () => {
-    const sortedStandings = renderTable();
-    renderFixtures();
-    updateStatsOverview(sortedStandings);
-});
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #25d366;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: transform 0.2s;
+}
+
+.cta-btn:hover {
+    transform: scale(1.05);
+}
+
+.wa-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Sections */
+.section {
+    margin: 30px 0;
+}
+
+.section h2 {
+    border-left: 4px solid var(--accent-color);
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
+/* Stats Overview Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stat-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.stat-number {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 0;
+    color: var(--accent-color);
+}
+
+.stat-text {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+    color: #ffffff;
+}
+
+.highlight-card {
+    border-color: var(--accent-color);
+}
+
+/* Table */
+.table-wrapper {
+    overflow-x: auto;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+th, td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: #2a2a2a;
+    color: var(--accent-color);
+}
+
+.team-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+}
+
+.team-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* Search Input */
+.search-container {
+    margin-bottom: 20px;
+}
+
+#team-search {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    box-sizing: border-box;
+    outline: none;
+}
+
+#team-search:focus {
+    border-color: var(--accent-color);
+}
+
+/* Fixtures Grid */
+.fixtures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.match-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.match-team {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.match-team.away {
+    justify-content: flex-end;
+}
+
+.score-box {
+    background-color: #2a2a2a;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin: 0 10px;
+}
+
+.matchday-title {
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+/* Matchday Layout Tweaks */
+.matchday-group {
+    margin-bottom: 25px;
+}
+
+.matchday-title {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+.matchday-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
