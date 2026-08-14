@@ -8,10 +8,12 @@
 </head>
 <body>
 
+    <!-- Header / Hero Section -->
     <header class="hero">
         <div class="container">
             <h1>DLS League</h1>
             <p>Register your team, check fixtures, and track live standings!</p>
+            <!-- Replace the href below with your actual WhatsApp Group Link -->
             <a href="https://chat.whatsapp.com/BmmbnRqv9vY8Gu9NescqUC?s=cl&p=a&mlu=0" target="_blank" class="cta-btn">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="wa-icon">
                 Join WhatsApp to Register Team
@@ -20,6 +22,26 @@
     </header>
 
     <main class="container">
+        
+        <!-- Stats Overview Cards -->
+        <section class="section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Matches Played</h3>
+                    <p id="stat-matches" class="stat-number">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Goals</h3>
+                    <p id="stat-goals" class="stat-number">0</p>
+                </div>
+                <div class="stat-card highlight-card">
+                    <h3>League Leader 🏆</h3>
+                    <p id="stat-leader" class="stat-text">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Standings Section -->
         <section class="section">
             <h2>League Table</h2>
             <div class="table-wrapper">
@@ -37,14 +59,17 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        </tbody>
+                        <!-- Populated by JavaScript -->
+                    </tbody>
                 </table>
             </div>
         </section>
 
+        <!-- Fixtures & Results Section -->
         <section class="section">
             <h2>Fixtures & Results</h2>
             
+            <!-- Team Search Filter Bar -->
             <div class="search-container">
                 <input 
                     type="text" 
@@ -55,10 +80,12 @@
             </div>
 
             <div id="fixtures-container" class="fixtures-grid">
-                </div>
+                <!-- Populated by JavaScript -->
+            </div>
         </section>
     </main>
 
+    <!-- Load Data and Main Script -->
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
