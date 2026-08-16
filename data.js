@@ -6,7 +6,7 @@ const teams = [
     { id: 4, name: "Galaxiers", logo: "team_logo/Galaxiers.jpg" },
     { id: 5, name: "Hyper City", logo: "team_logo/Hyper City.jpg" },
     { id: 6, name: "Viper Fc", logo: "team_logo/Viper FC.jpg" },
-    { id: 7, name: "Manchester United H", logo: "team_logo/Manchester United H.jpg" },
+    { id: 7, name: "Nobi Fc", logo: "team_logo/Nobi_Fc.jpg" },
 ];
 
 // All 42 Double Round-Robin fixtures (7 Teams, 14 Matchdays)
