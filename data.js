@@ -22,7 +22,7 @@ const matches = [
     { homeId: 7, awayId: 3, homeScore: 3, awayScore: 0, played: true, matchday: 8 },
     { homeId: 1, awayId: 2, homeScore: 4, awayScore: 3, played: true, matchday: 9 },
     { homeId: 5, awayId: 3, homeScore: 4, awayScore: 0, played: true, matchday: 10 },
-    { homeId: 6, awayId: 2, homeScore: 0, awayScore: 0, played: false, matchday: 11 },
+    { homeId: 6, awayId: 2, homeScore: 1, awayScore: 2, played: true, matchday: 11 },
     { homeId: 7, awayId: 1, homeScore: 0, awayScore: 0, played: false, matchday: 12 },
     { homeId: 4, awayId: 2, homeScore: 0, awayScore: 0, played: false, matchday: 13 },
     { homeId: 5, awayId: 1, homeScore: 0, awayScore: 0, played: false, matchday: 14 },
